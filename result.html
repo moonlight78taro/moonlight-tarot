@@ -88,6 +88,7 @@
     }
 
  
+
 .card-name {
   color: #e6c58c;
   font-size: 18px;
@@ -95,12 +96,26 @@
 
   min-height: 81px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
 
   word-break: keep-all;
   overflow-wrap: break-word;
 }
+
+.card-name > div:first-child {
+  font-family: "Malgun Gothic", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.card-name > div:nth-child(2) {
+  font-size: 15px;
+}
+
 
 .direction {
   color: #c9b1e4;
@@ -417,7 +432,25 @@ if (positionDescription) {
 
       const name = document.createElement("div");
       name.className = "card-name";
-      name.textContent = getCardName(cardFile);
+      
+const fullName = getCardName(cardFile);
+const match = fullName.match(/^(.*?)\s*(\([^()]+\))$/);
+
+if (match) {
+  name.textContent = "";
+
+  const korean = document.createElement("div");
+  korean.textContent = match[1];
+
+  const english = document.createElement("div");
+  english.textContent = match[2];
+
+  name.appendChild(korean);
+  name.appendChild(english);
+} else {
+  name.textContent = fullName;
+}
+
 
       const directionText = document.createElement("div");
       directionText.className = "direction";
