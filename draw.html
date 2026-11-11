@@ -293,6 +293,51 @@
 .deck-viewport::-webkit-scrollbar {
   display: none;
 }
+
+/* 카드 선택 안내 문구 */
+.card-count-guide {
+  display: inline-block;
+  margin-top: 12px;
+  color: #f5d99c;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-shadow: 0 0 10px rgba(245, 217, 156, 0.3);
+}
+
+.card-count-guide strong {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  line-height: inherit;
+  vertical-align: baseline;
+  position: relative;
+  top: 0;
+}
+
+.card-count-guide .card-number {
+  position: relative;
+  top: -2px;
+}
+.selected-number {
+  display: inline-block;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  position: relative;
+  top: 0;
+  vertical-align: baseline;
+}
+
+
+.card-flow-guide {
+  display: inline-block;
+  margin-top: 10px;
+  color: #c9b1e4;
+  font-size: 14px;
+  line-height: 1.6;
+}
 </style>
 </head>
 
@@ -488,11 +533,12 @@ window.addEventListener("load", updateScrollIndicator);
       const topicName = topicNames[selectedTopic] || "주제별 타로";
       description.innerHTML =
         topicName + "에 관한 질문을 마음속으로 떠올려 보세요.<br>" +
-        "현재 상황, 조언, 미래 흐름을 위한 카드 3장을 선택해 주세요.";
+       '<span class="card-count-guide">✦ 카드를 <strong><span class="card-number">3</span>장</strong> 선택해 주세요 ✦</span><br>' +
+'<span class="card-flow-guide">현재 상황 · 조언 · 미래 흐름을 살펴봅니다.</span>';
     } else if (readingType === "concern") {
       description.innerHTML =
-        "마음속 고민을 떠올려 보세요.<br>" +
-        "현재 상황, 조언, 미래 흐름을 위한 카드 3장을 선택해 주세요.";
+      '<span class="card-count-guide">✦ 카드를 <strong><span class="card-number">3</span>장</strong> 선택해 주세요 ✦</span><br>' +
+'<span class="card-flow-guide">현재 상황 · 조언 · 미래 흐름을 살펴봅니다.</span>';
     }
 
     const selectedCards = [];
@@ -556,12 +602,12 @@ button.style.zIndex = i + 1;
 
         const count = selectedCards.length;
 
-        selectedTitle.textContent =
-          `선택한 카드 ${count} / ${requiredCount}장`;
+        selectedTitle.innerHTML =
+        `선택한 카드 <span class="selected-number">${count}</span> / <span class="selected-number ${requiredCount === 3 ? 'number-three' : ''}">${requiredCount}</span>장`;
 
-        if (count < requiredCount) {
-          message.textContent =
-            `${count}번째 카드를 선택했어요. 다음 카드를 선택해 주세요. ✨`;
+       if (count < requiredCount) {
+         message.innerHTML =
+        `<span class="selected-number">${count}</span>번째 카드를 선택했어요. 다음 카드를 선택해 주세요. ✨`;
         } else {
           message.textContent =
             "모든 카드가 선택되었습니다. 결과를 준비하고 있어요. ✨";

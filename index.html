@@ -107,6 +107,8 @@
   }
 
   .tarot-card {
+    position: relative;
+    z-index: 1;
     width: 135px;
     margin: 8px 0;
   }
@@ -141,22 +143,57 @@
 
   
 .tarot-card {
+  position: relative;
+  z-index: 1;
   width: 170px;
   max-width: 55vw;
   height: auto;
   margin: 15px 0;
   border-radius: 10px;
-  box-shadow: 0 0 35px rgba(180, 130, 255, 0.3);
+  
+box-shadow:
+  0 0 25px rgba(180, 130, 255, 0.5),
+  0 0 55px rgba(150, 90, 255, 0.3);
+
+  animation: cardMoonlight 1.2s ease-in-out infinite;
+  animation-play-state: running;
+  }
+
+
+
+@keyframes cardMoonlight {
+  0%, 100% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(1.1) sepia(0.04);
+  }
 }
+
+
+
+
 .tarot-card {
   cursor: pointer;
   transition:
     transform 0.35s ease,
     box-shadow 0.35s ease;
 }
+@keyframes cardGlow {
+  0% {
+    box-shadow: 0 0 20px rgba(180, 130, 255, 0.2);
+  }
+
+  100% {
+    box-shadow:
+      0 0 35px rgba(180, 130, 255, 0.5),
+      0 0 65px rgba(150, 100, 255, 0.25);
+  }
+} 
 
 @media (hover: hover) and (pointer: fine) {
-  a:hover > .tarot-card {
+  a:hover .tarot-card {
     transform: scale(1.06);
     box-shadow:
       0 0 20px rgba(255, 220, 150, 0.6),
@@ -226,6 +263,286 @@
   font-size: 12px;
   margin: 0 2px;
 }
+/* 메인 타로카드 별빛 효과 */
+.tarot-card-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.tarot-card-wrap {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+}
+
+
+.gold-sparkles {
+  display: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  
+}
+
+.moon-mist {
+  display: none;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: -1;
+}
+.moon-mist-front {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: visible;
+  animation: moonFrontBreathe 7s ease-in-out infinite;
+}
+@keyframes moonFrontBreathe {
+  0%, 100% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes moonRibbonSway {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  
+
+  50% {
+    transform: translateY(-2px);
+  }
+}
+@keyframes moonlightFlow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: -240;
+  }
+}
+@keyframes moonSmokeFlow {
+  0%, 100% {
+    transform: translateX(-8px);
+    opacity: 0.25;
+  }
+
+  50% {
+    transform: translateX(8px);
+    opacity: 0.55;
+  }
+}
+
+.moon-mist::before,
+.moon-mist::after {
+  display: none;
+  content: "";
+  position: absolute;
+  width: 38px;
+  height: 190px;
+  border-radius: 50% 50% 45% 55%;
+  opacity: 0.55;
+  filter: blur(12px);
+  background: radial-gradient(
+  ellipse at center,
+  rgba(225, 245, 255, 0.65) 0%,
+  rgba(165, 210, 245, 0.35) 35%,
+  rgba(120, 175, 225, 0.12) 65%,
+  transparent 100%
+);
+}
+
+.moon-mist::before {
+  left: -30px;
+  top: -5%;
+  transform: rotate(-35deg);
+  border-radius: 70% 30% 65% 35%;
+}
+
+.moon-mist::after {
+  right: -30px;
+  bottom: -5%;
+  transform: rotate(35deg);
+  border-radius: 30% 70% 35% 65%;
+}
+.gold-spiral {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+  transform-origin: center center;
+  animation: goldSpiralRotate 1.8s linear infinite;
+}
+@keyframes moonMistStream {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: -300;
+  }
+}
+@keyframes goldSpiralRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spiral-particle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #f5b83d;
+  box-shadow:
+    0 0 3px 1px rgba(255, 190, 60, 0.85),
+    0 0 9px 2px rgba(255, 150, 20, 0.4);
+  pointer-events: none;
+}
+@keyframes spiralTwinkle {
+  0%, 100% {
+    opacity: 0.15;
+    filter: brightness(0.6);
+    scale: 0.6;
+  }
+
+  25% {
+    opacity: 0.6;
+    filter: brightness(1);
+    scale: 0.9;
+  }
+
+  50% {
+    opacity: 1;
+    filter: brightness(1.4);
+    scale: 1.5;
+  }
+
+  75% {
+    opacity: 0.5;
+    filter: brightness(0.9);
+    scale: 0.8;
+  }
+}
+.gold-sparkles::before,
+.gold-sparkles::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffe7a0;
+  box-shadow:
+    0 0 5px 2px rgba(255, 215, 120, 0.9),
+    0 0 12px 4px rgba(255, 190, 70, 0.5);
+  pointer-events: none;
+}
+
+.gold-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #e9a51b;
+  box-shadow:
+    0 0 3px 1px rgba(255, 185, 45, 0.85),
+    0 0 8px 2px rgba(230, 145, 15, 0.45);
+  pointer-events: none;
+}
+
+.gold-particle:nth-child(1) {
+  left: -12px;
+  top: 10%;
+  animation: goldMove2 1.8s ease-in-out infinite;
+  animation-delay: -0.45s;
+}
+
+.gold-particle:nth-child(2) {
+  left: calc(100% + 8px);
+  top: 80%;
+  animation: goldMove1 1.8s ease-in-out infinite;
+  animation-delay: -0.9s;
+}
+
+.gold-sparkles::before {
+  left: 15%;
+  top: 20%;
+  animation: goldMove1 1.8s ease-in-out infinite;
+}
+
+.gold-sparkles::after {
+  left: 80%;
+  top: 70%;
+  animation: goldMove2 1.8s ease-in-out infinite;
+}
+
+@keyframes goldMove1 {
+  0% {
+    transform: translate(0, 0) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    transform: translate(45px, 20px) scale(1);
+    opacity: 1;
+  }
+  40% {
+    transform: translate(95px, 65px) scale(1.3);
+    opacity: 1;
+  }
+  60% {
+    transform: translate(35px, 110px) scale(0.8);
+    opacity: 0.7;
+  }
+  80% {
+    transform: translate(-20px, 155px) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, 190px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes goldMove2 {
+  0% {
+    transform: translate(0, 0) scale(0.5);
+    opacity: 0;
+  }
+  25% {
+    transform: translate(-80px, -40px) scale(1.2);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-10px, -90px) scale(0.7);
+    opacity: 0.6;
+  }
+  75% {
+    transform: translate(-90px, -140px) scale(1.3);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, -180px) scale(0.5);
+    opacity: 0;
+  }
+}
+
 
   </style>
 </head>
@@ -238,11 +555,133 @@
 
 
 <a href="reading.html" aria-label="타로 시작하기">
+  <span class="tarot-card-wrap">
   <img
     class="tarot-card"
     src="images/card_back.png"
     alt="달빛 타로 카드 뒷면"
   >
+
+  <span class="gold-sparkles" aria-hidden="true">
+    <span class="gold-particle"></span>
+    <span class="gold-particle"></span>
+    <span class="gold-spiral" aria-hidden="true"></span>
+  </span>
+
+  <span class="moon-mist" aria-hidden="true">
+  <svg
+    viewBox="0 0 260 360"
+    width="260"
+    height="360"
+    style="
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      overflow: visible;
+    "
+  >
+    <defs>
+<linearGradient id="moonSmokeColor"
+ x1="100%" y1="0%" x2="0%" y2="100%"
+>
+  <stop offset="0%" stop-color="#a8bfff" stop-opacity="0"/>
+  <stop offset="20%" stop-color="#b8d8ff" stop-opacity="0.25"/>
+<stop offset="45%" stop-color="#d9edff" stop-opacity="0.9"/>
+<stop offset="65%" stop-color="#c8e8ff" stop-opacity="0.75"/>
+  <stop offset="85%" stop-color="#b5c9ff" stop-opacity="0.15"/>
+  <stop offset="100%" stop-color="#b5c9ff" stop-opacity="0"/>
+</linearGradient>
+
+      <filter id="moonSmokeBlur">
+        <feGaussianBlur stdDeviation="2.5"/>
+      </filter>
+    </defs>
+
+   <path
+ d="M 210 45
+   C 335 100, 290 155, 110 175
+   C -65 195, -45 250, 115 280
+   C 185 290, 195 295, 180 300"
+  fill="none"
+  stroke="#b8d8ff"
+  stroke-width="10"
+  stroke-linecap="round"
+  filter="url(#moonSmokeBlur)"
+  opacity="0.4"
+/>
+
+  </svg>
+</span>
+<span class="moon-mist-front" aria-hidden="true">
+  <svg
+    viewBox="0 0 260 360"
+    width="260"
+    height="360"
+    style="
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      overflow: visible;
+    "
+  >
+  <defs>
+  <linearGradient id="moonFrontGradient">
+    <stop offset="0%" stop-color="#a8c8ff" stop-opacity="0"/>
+    <stop offset="25%" stop-color="#c8e8ff" stop-opacity="0.25"/>
+    <stop offset="50%" stop-color="#e4f4ff" stop-opacity="0.55"/>
+    <stop offset="75%" stop-color="#c8e8ff" stop-opacity="0.25"/>
+    <stop offset="90%" stop-color="#b8d8ff" stop-opacity="0.08"/>
+    <stop offset="100%" stop-color="#a8c8ff" stop-opacity="0"/>
+  </linearGradient>
+</defs>
+    <path
+d="M 35 245
+   C 85 285, 170 285, 225 245"
+   C 65 290, 125 300, 185 275
+   C 215 265, 235 250, 245 230"
+      fill="none"
+      stroke="url(#moonFrontGradient)"
+      stroke-width="8"
+      stroke-linecap="round"
+      opacity="0.65"
+      style="filter: blur(4px); stroke-dasharray: 60 180; animation: moonlightFlow 12s linear infinite, moonRibbonSway 9s ease-in-out infinite;"
+    />
+  </svg>
+</span>
+</span>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const spiral = document.querySelector(".gold-spiral");
+    if (!spiral) return;
+
+const particleCount = 24;
+
+for (let i = 0; i < particleCount; i++) {
+  const particle = document.createElement("span");
+  particle.className = "spiral-particle";
+
+ const progress = i / particleCount;
+const angle = progress * Math.PI * 4;
+
+const radius = 95;
+const x = Math.cos(angle) * radius;
+const y = (progress - 0.5) * 230
+        + Math.sin(angle) * 18;
+
+  particle.style.transform = `translate(${x}px, ${y}px)`;
+  particle.style.animation = `spiralTwinkle ${1 + Math.random()}s ease-in-out infinite`;
+  particle.style.animationDelay = `${Math.random() * -2}s`;
+
+  spiral.appendChild(particle);
+}
+  });
+</script>
+</span>
+   </span>
+   </span>
 </a>
 <div class="card-guide">
   ✧ 카드를 눌러 시작하세요 ✧
@@ -259,10 +698,7 @@
     </p>
 
     
-<button onclick="location.href='reading.html'">
 
-      타로 시작하기
-    </button>
 
     
 
