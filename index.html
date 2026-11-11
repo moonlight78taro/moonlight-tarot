@@ -61,7 +61,7 @@
 
     .description {
       margin: 45px 0;
-      line-height: 2.2;
+      line-height: 1.7;
       font-size: 15px;
       color: #ded4e9;
     }
@@ -92,22 +92,48 @@
 
 @media (max-width: 480px) {
 
-.container {
-  padding: 30px 20px 55px;
-  justify-content: flex-start;
-}
+  .container {
+    padding: 20px 20px 35px;
+    justify-content: flex-start;
+  }
 
-
-  h1 {
-    font-size: 34px;
+  .stars {
+    font-size: 18px;
   }
 
   .moon {
-    font-size: 65px;
+    font-size: 48px;
+    margin: 10px 0;
+  }
+
+  .tarot-card {
+    width: 135px;
+    margin: 8px 0;
+  }
+
+  h1 {
+    font-size: 30px;
+    margin: 8px 0;
+  }
+
+  .english {
+    font-size: 11px;
+    letter-spacing: 4px;
+  }
+
+  .description {
+    margin: 20px 0;
+    line-height: 1.8;
+    font-size: 14px;
+  }
+
+  button {
+    padding: 14px 36px;
+    font-size: 15px;
   }
 
   footer {
-    margin-top: 25px;
+    margin-top: 30px;
   }
 }
 
@@ -122,7 +148,60 @@
   border-radius: 10px;
   box-shadow: 0 0 35px rgba(180, 130, 255, 0.3);
 }
+.tarot-card {
+  cursor: pointer;
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
 
+@media (hover: hover) and (pointer: fine) {
+  a:hover > .tarot-card {
+    transform: scale(1.06);
+    box-shadow:
+      0 0 20px rgba(255, 220, 150, 0.6),
+      0 0 45px rgba(180, 130, 255, 0.65),
+      0 0 70px rgba(150, 100, 255, 0.3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tarot-card {
+    transition: none;
+  }
+}
+
+.card-guide {
+  color: #ffe5a8;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin: 2px 0 14px;
+
+  text-shadow:
+    0 0 6px rgba(255, 225, 150, 0.9),
+    0 0 14px rgba(255, 200, 100, 0.6),
+    0 0 24px rgba(255, 190, 90, 0.3);
+
+  animation: guideGlow 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes guideGlow {
+  from {
+    opacity: 0.85;
+    text-shadow:
+      0 0 5px rgba(255, 225, 150, 0.6),
+      0 0 12px rgba(255, 200, 100, 0.3);
+  }
+
+  to {
+    opacity: 1;
+    text-shadow:
+      0 0 8px rgba(255, 235, 180, 1),
+      0 0 20px rgba(255, 210, 120, 0.9),
+      0 0 35px rgba(255, 190, 90, 0.55);
+  }
+}
 
 .footer-link {
   display: inline-block;
@@ -158,11 +237,16 @@
 <div class="moon">☾</div>
 
 
-<img
-  class="tarot-card"
-  src="images/card_back.png"
-  alt="달빛 타로 카드 뒷면"
->
+<a href="reading.html" aria-label="타로 시작하기">
+  <img
+    class="tarot-card"
+    src="images/card_back.png"
+    alt="달빛 타로 카드 뒷면"
+  >
+</a>
+<div class="card-guide">
+  ✧ 카드를 눌러 시작하세요 ✧
+</div>
 
 
     <h1>달빛 타로</h1>
