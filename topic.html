@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주제별 타로 | 달빛 타로</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(
+        ellipse at 50% 30%,
+        #302450 0%,
+        #14132e 45%,
+        #080d20 100%
+      );
+      color: #f5e8d0;
+      font-family: Georgia, "Malgun Gothic", serif;
+      text-align: center;
+    }
+
+    main {
+      max-width: 460px;
+      margin: 0 auto;
+      padding: 65px 24px;
+    }
+
+    .moon {
+      color: #e6c58c;
+      font-size: 50px;
+    }
+
+    h1 {
+      font-size: 29px;
+      font-weight: normal;
+      margin: 20px 0;
+    }
+
+    .description {
+      color: #c9b1e4;
+      font-size: 14px;
+      line-height: 2;
+      margin-bottom: 35px;
+    }
+
+    .topic-option {
+      display: block;
+      width: 100%;
+      margin: 14px 0;
+      padding: 22px 20px;
+      border: 1px solid #9c82b6;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      color: #f5e8d0;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .topic-option:hover {
+      background: rgba(213,181,126,0.15);
+      border-color: #d5b57e;
+    }
+
+    .topic-option strong {
+      display: block;
+      font-size: 18px;
+      font-weight: normal;
+      margin-bottom: 8px;
+    }
+
+    .topic-option span {
+      color: #c9b1e4;
+      font-size: 12px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 30px;
+      color: #c9b1e4;
+      text-decoration: none;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="moon">☾</div>
+
+    <h1>어떤 고민이 있나요?</h1>
+
+    <p class="description">
+      달빛 아래 마음에 닿는 주제를 선택해 주세요.<br>
+      당신의 이야기를 카드에 담아볼게요.
+    </p>
+
+    <a class="topic-option" href="draw.html?type=topic&topic=love">
+      <strong>♡ 연애운</strong>
+      <span>사랑과 인연에 관한 이야기</span>
+    </a>
+
+    <a class="topic-option" href="draw.html?type=topic&topic=money">
+      <strong>✧ 금전운</strong>
+      <span>돈과 재정에 관한 이야기</span>
+    </a>
+
+    <a class="topic-option" href="draw.html?type=topic&topic=career">
+      <strong>✦ 직장운</strong>
+      <span>일과 진로에 관한 이야기</span>
+    </a>
+
+    <a class="topic-option" href="draw.html?type=topic&topic=relationship">
+      <strong>☽ 인간관계</strong>
+      <span>사람들과의 관계에 관한 이야기</span>
+    </a>
+
+    <a class="back" href="reading.html">
+      ← 리딩 선택으로 돌아가기
+    </a>
+  </main>
+</body>
+</html>

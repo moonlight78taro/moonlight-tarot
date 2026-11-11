@@ -1,0 +1,662 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>카드 선택 | 달빛 타로</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(
+        ellipse at 50% 30%,
+        #302450, #14132e 50%, #080d20
+      );
+      color: #f5e8d0;
+      font-family: Georgia, "Malgun Gothic", serif;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 45px 16px 65px;
+    }
+
+    h1 {
+      font-size: 27px;
+      font-weight: normal;
+    }
+
+    p {
+      color: #c9b1e4;
+      line-height: 1.9;
+      font-size: 14px;
+    }
+
+    .selected-area {
+      margin: 25px auto 10px;
+      min-height: 145px;
+    }
+
+    .selected-title {
+      color: #e6c58c;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .selected-cards {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      min-height: 115px;
+      align-items: center;
+    }
+
+    .selected-card {
+      width: 72px;
+      animation: appear 0.4s ease;
+    }
+
+    .selected-card img {
+      width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 0 18px #a77ad555;
+    }
+
+    .selected-card span {
+      display: block;
+      color: #c9b1e4;
+      font-size: 11px;
+      margin-top: 8px;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .deck-guide {
+      color: #d7c3ed;
+      font-size: 13px;
+      margin: 25px 0 5px;
+    }
+
+    .deck-viewport {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 25px 0 35px;
+      scrollbar-color: #d8b5ff #302450;
+      scrollbar-width: auto;
+      touch-action: pan-x;
+    }
+
+    .deck-track {
+      position: relative;
+      height: 240px;
+      width: max-content;
+      min-width: 100%;
+      margin: 0 auto;
+    }
+
+    .card {
+      position: absolute;
+      top: 10px;
+      width: 105px;
+      height: 180px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      transform-origin: center bottom;
+      transition: transform 0.25s, filter 0.25s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .card img {
+      display: block;
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 0 15px #6f4a9b55;
+      pointer-events: none;
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      transform: translateY(-18px);
+      filter: brightness(1.2);
+      z-index: 100 !important;
+    }
+
+    .card:focus-visible {
+      outline: 2px solid #e6c58c;
+      outline-offset: 3px;
+    }
+
+    .card:disabled {
+      cursor: default;
+      opacity: 0.25;
+    }
+
+    .message {
+      margin-top: 20px;
+      color: #e6c58c;
+      min-height: 30px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 30px;
+      color: #c9b1e4;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    @media (max-width: 480px) {
+      main {
+        padding: 30px 12px 45px;
+      }
+
+      h1 {
+        font-size: 21px;
+      }
+
+      .selected-area {
+  min-height: 45px;
+}
+
+.selected-card {
+  width: 60px;
+}
+
+.selected-cards {
+  min-height: 0;
+}
+
+     .deck-track {
+  height: 210px;
+}
+
+      .card {
+        width: 85px;
+        height: 150px;
+      }
+    }
+ /* 카드 좌우 이동 버튼 */
+.deck-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin: 22px auto 0;
+}
+
+.deck-navigation button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #b89ad5;
+  border-radius: 50%;
+  background: rgba(88, 61, 125, 0.35);
+  color: #e6c58c;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.deck-navigation button:hover {
+  background: rgba(150, 112, 190, 0.45);
+  transform: scale(1.08);
+}
+
+.deck-navigation span {
+  color: #c9b1e4;
+  font-size: 13px;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .deck-navigation {
+    gap: 12px;
+  }
+
+  .deck-navigation button {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  .deck-navigation span {
+    font-size: 11px;
+  }
+}
+/* 모바일 카드 스크롤바 배경 */
+@media (max-width: 480px) {
+    .deck-viewport::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .deck-viewport::-webkit-scrollbar-track {
+        background: #35254f;
+        border-radius: 10px;
+    }
+
+    .deck-viewport::-webkit-scrollbar-thumb {
+        background: #b79ad9;
+        border-radius: 10px;
+    }
+}
+
+/* 카드 이동 위치 표시줄 */
+.scroll-indicator {
+  width: 100%;
+  height: 8px;
+  margin-top: 12px;
+  background: #35254f;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  touch-action: none;
+}
+
+/* 현재 카드 위치 */
+.scroll-indicator-thumb {
+  width: 20%;
+  height: 100%;
+  background: #b79ad9;
+  border-radius: 10px;
+}
+
+/* 기존 브라우저 스크롤바 숨기기 */
+.deck-viewport {
+  scrollbar-width: none;
+}
+
+.deck-viewport::-webkit-scrollbar {
+  display: none;
+}
+</style>
+</head>
+
+<body>
+  <main>
+    <h1>☾ 마음이 이끄는 카드를 선택하세요</h1>
+
+    <p id="description">
+      잠시 눈을 감고 마음속 질문을 떠올려 보세요.<br>
+      준비가 되었다면 카드 한 장을 선택해 주세요.
+    </p>
+
+    <div class="selected-area">
+      <div class="selected-title" id="selectedTitle">
+        선택한 카드 0장
+      </div>
+      <div class="selected-cards" id="selectedCards"></div>
+    </div>
+
+    <p class="deck-guide">
+     ✧ 78장의 카드 중 마음이 끌리는 카드를 골라보세요 ✧
+    </p>
+
+    <div class="deck-viewport" id="deckViewport">
+      <div class="deck-track" id="cards"></div>
+    </div>
+<div class="scroll-indicator" id="scrollIndicator">
+  <div class="scroll-indicator-thumb" id="scrollThumb"></div>
+</div>
+
+    <div class="deck-navigation">
+  <button type="button" id="prevCards" aria-label="이전 카드 보기">
+    ❮
+  </button>
+
+  <span>좌우 화살표를 눌러 카드를 넘겨보세요</span>
+
+  <button type="button" id="nextCards" aria-label="다음 카드 보기">
+    ❯
+  </button>
+</div>
+
+    <p class="message" id="message"></p>
+
+    <a class="back" href="reading.html">
+      ← 리딩 선택으로 돌아가기
+    </a>
+  </main>
+
+  <script>
+    const cards = document.getElementById("cards");
+    const message = document.getElementById("message");
+    const description = document.getElementById("description");
+    const selectedCardsArea = document.getElementById("selectedCards");
+    const selectedTitle = document.getElementById("selectedTitle");
+    const viewport = document.getElementById("deckViewport");
+    // 카드 이동 위치 표시줄
+const scrollThumb = document.getElementById("scrollThumb");
+const scrollIndicator = document.getElementById("scrollIndicator");
+
+let isDraggingScroll = false;
+
+function moveScrollToPointer(event) {
+  const rect = scrollIndicator.getBoundingClientRect();
+
+  const thumbWidth = scrollThumb.getBoundingClientRect().width;
+
+  const availableWidth = rect.width - thumbWidth;
+
+  if (availableWidth <= 0) return;
+
+  const pointerX = event.clientX - rect.left - thumbWidth / 2;
+
+  const progress = Math.max(
+    0,
+    Math.min(1, pointerX / availableWidth)
+  );
+
+  const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+
+  viewport.scrollLeft = progress * maxScroll;
+}
+
+// 마우스 또는 손가락으로 누르기
+scrollIndicator.addEventListener("pointerdown", (event) => {
+  isDraggingScroll = true;
+
+  scrollIndicator.setPointerCapture(event.pointerId);
+
+  moveScrollToPointer(event);
+});
+
+// 누른 상태로 좌우 이동
+scrollIndicator.addEventListener("pointermove", (event) => {
+  if (!isDraggingScroll) return;
+
+  moveScrollToPointer(event);
+});
+
+// 손을 떼면 드래그 종료
+function stopScrollDragging() {
+  isDraggingScroll = false;
+}
+
+scrollIndicator.addEventListener("pointerup", stopScrollDragging);
+scrollIndicator.addEventListener("pointercancel", stopScrollDragging);
+scrollIndicator.addEventListener("lostpointercapture", stopScrollDragging);
+
+function updateScrollIndicator() {
+  const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+
+  // 화면에 보이는 카드 영역의 비율
+  const visibleRatio = viewport.clientWidth / viewport.scrollWidth;
+
+  // 막대 길이
+  const thumbWidth = Math.min(100, visibleRatio * 100);
+  scrollThumb.style.width = thumbWidth + "%";
+
+  // 현재 이동 위치
+  const progress = maxScroll > 0
+    ? viewport.scrollLeft / maxScroll
+    : 0;
+
+  // 막대가 움직일 수 있는 범위
+  const maxMove = 100 - thumbWidth;
+
+  scrollThumb.style.marginLeft =
+    (progress * maxMove) + "%";
+}
+
+// 카드를 좌우로 이동하면 표시줄도 갱신
+viewport.addEventListener("scroll", updateScrollIndicator);
+
+// 화면 크기가 달라지면 다시 계산
+window.addEventListener("resize", updateScrollIndicator);
+
+// 첫 화면 표시
+window.addEventListener("load", updateScrollIndicator);
+
+    const majorNames = [
+      "THE_FOOL", "THE_MAGICIAN", "THE_HIGH_PRIESTESS",
+      "THE_EMPRESS", "THE_EMPEROR", "THE_HIEROPHANT",
+      "THE_LOVERS", "THE_CHARIOT", "STRENGTH",
+      "THE_HERMIT", "WHEEL_OF_FORTUNE", "JUSTICE",
+      "THE_HANGED_MAN", "DEATH", "TEMPERANCE",
+      "THE_DEVIL", "THE_TOWER", "THE_STAR",
+      "THE_MOON", "THE_SUN", "JUDGEMENT",
+      "THE_WORLD"
+    ];
+
+    const deck = [];
+
+    majorNames.forEach((name, i) => {
+      const number = String(i).padStart(2, "0");
+      deck.push(`${number}_${name}.png`);
+    });
+
+    const suits = ["CUPS", "PENTACLES", "SWORDS", "WANDS"];
+
+    const ranks = [
+      "ACE", "TWO", "THREE", "FOUR", "FIVE",
+      "SIX", "SEVEN", "EIGHT", "NINE", "TEN",
+      "PAGE", "KNIGHT", "QUEEN", "KING"
+    ];
+
+    suits.forEach(suit => {
+      ranks.forEach((rank, i) => {
+        const number = String(i + 1).padStart(2, "0");
+        deck.push(`${suit}_${number}_${rank}_OF_${suit}.png`);
+      });
+    });
+
+    for (let i = deck.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [deck[i], deck[j]] = [deck[j], deck[i]];
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const readingType = params.get("type");
+    const selectedTopic = params.get("topic");
+
+    const requiredCount =
+      readingType === "concern" || readingType === "topic" ? 3 : 1;
+
+    const topicNames = {
+      love: "연애운",
+      money: "금전운",
+      career: "직장운",
+      relationship: "인간관계"
+    };
+
+    if (readingType === "topic") {
+      const topicName = topicNames[selectedTopic] || "주제별 타로";
+      description.innerHTML =
+        topicName + "에 관한 질문을 마음속으로 떠올려 보세요.<br>" +
+        "현재 상황, 조언, 미래 흐름을 위한 카드 3장을 선택해 주세요.";
+    } else if (readingType === "concern") {
+      description.innerHTML =
+        "마음속 고민을 떠올려 보세요.<br>" +
+        "현재 상황, 조언, 미래 흐름을 위한 카드 3장을 선택해 주세요.";
+    }
+
+    const selectedCards = [];
+    const spacing = window.innerWidth <= 480 ? 27 : 36;
+    const cardWidth = window.innerWidth <= 480 ? 85 : 105;
+
+    cards.style.width =
+      ((deck.length - 1) * spacing + cardWidth) + "px";
+
+    deck.forEach((cardName, i) => {
+      const button = document.createElement("button");
+      button.className = "card";
+      button.type = "button";
+     button.style.left = (i * spacing) + "px";
+button.style.zIndex = i + 1;
+
+
+
+  
+      button.setAttribute("aria-label", `${i + 1}번 카드 선택`);
+
+      const img = document.createElement("img");
+      img.src = "images/card_back.png";
+      img.alt = "타로 카드 뒷면";
+
+      button.appendChild(img);
+
+      button.addEventListener("click", () => {
+        if (button.disabled || selectedCards.length >= requiredCount) {
+          return;
+        }
+
+        const reversed = Math.random() < 0.5;
+        const direction = reversed ? "reversed" : "upright";
+
+        selectedCards.push({
+          card: cardName,
+          direction: direction
+        });
+
+        button.disabled = true;
+        button.style.visibility = "hidden";
+
+        const selectedDiv = document.createElement("div");
+        selectedDiv.className = "selected-card";
+
+        const selectedImg = document.createElement("img");
+        selectedImg.src = "images/" + cardName;
+        selectedImg.alt = "선택한 타로 카드";
+
+        if (reversed) {
+          selectedImg.style.transform = "rotate(180deg)";
+        }
+
+        const label = document.createElement("span");
+        label.textContent = reversed ? "역방향" : "정방향";
+
+        selectedDiv.appendChild(selectedImg);
+        selectedDiv.appendChild(label);
+        selectedCardsArea.appendChild(selectedDiv);
+
+        const count = selectedCards.length;
+
+        selectedTitle.textContent =
+          `선택한 카드 ${count} / ${requiredCount}장`;
+
+        if (count < requiredCount) {
+          message.textContent =
+            `${count}번째 카드를 선택했어요. 다음 카드를 선택해 주세요. ✨`;
+        } else {
+          message.textContent =
+            "모든 카드가 선택되었습니다. 결과를 준비하고 있어요. ✨";
+
+          document.querySelectorAll(".card").forEach(card => {
+            card.disabled = true;
+          });
+
+          const resultParams = new URLSearchParams();
+          resultParams.set("type", readingType || "daily");
+
+          if (readingType === "topic" && topicNames[selectedTopic]) {
+            resultParams.set("topic", selectedTopic);
+          }
+
+          selectedCards.forEach((item, index) => {
+            resultParams.set("card" + (index + 1), item.card);
+            resultParams.set("direction" + (index + 1), item.direction);
+          });
+
+          if (requiredCount === 1) {
+            resultParams.set("card", selectedCards[0].card);
+            resultParams.set("direction", selectedCards[0].direction);
+          }
+
+          setTimeout(() => {
+            window.location.href =
+              "result.html?" + resultParams.toString();
+          }, 1500);
+        }
+      });
+
+      cards.appendChild(button);
+    });
+
+    // 처음에는 카드 덱의 중앙 부근을 보여주기
+    // 처음에는 덱 중앙을 보여주기
+window.addEventListener("load", () => {
+  viewport.scrollLeft =
+    (viewport.scrollWidth - viewport.clientWidth) / 2;
+
+  updateFan();
+});
+
+// 카드 78장 생성이 끝난 다음 곡선 계산
+function updateFan() {
+  const viewportCenter =
+    viewport.scrollLeft + viewport.clientWidth / 2;
+
+  const visibleHalf = viewport.clientWidth / 2;
+
+  document.querySelectorAll(".card").forEach((card, index) => {
+    const cardCenter = index * spacing + cardWidth / 2;
+    const relativePosition =
+      (cardCenter - viewportCenter) / visibleHalf;
+
+    const limitedPosition = Math.max(
+      -1, Math.min(1, relativePosition)
+    );
+
+    const verticalOffset =
+      Math.pow(limitedPosition, 2) * 32;
+
+    const rotation = limitedPosition * 9;
+
+    card.style.top = (10 + verticalOffset) + "px";
+    card.style.rotate = rotation + "deg";
+  });
+}
+
+viewport.addEventListener("scroll", updateFan);
+window.addEventListener("resize", updateFan);
+// 좌우로 넘길 때 카드 곡선 갱신
+viewport.addEventListener("scroll", updateFan);
+
+// 브라우저 크기가 변경될 때 갱신
+window.addEventListener("resize", updateFan);
+  // 좌우 화살표로 카드 이동하기
+const prevCards = document.getElementById("prevCards");
+const nextCards = document.getElementById("nextCards");
+
+// 한 번 클릭할 때 이동하는 거리
+function moveCards(direction) {
+  const moveDistance = viewport.clientWidth * 0.6;
+
+  viewport.scrollBy({
+    left: direction * moveDistance,
+    behavior: "smooth"
+  });
+}
+
+// 왼쪽 화살표
+prevCards.addEventListener("click", () => {
+  moveCards(-1);
+});
+
+// 오른쪽 화살표
+nextCards.addEventListener("click", () => {
+  moveCards(1);
+});
+  </script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>달빛 타로 | Moonlight Tarot</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(
+        ellipse at 50% 30%,
+        #302450 0%,
+        #14132e 45%,
+        #080d20 100%
+      );
+      color: #f5e8d0;
+      font-family: Georgia, "Malgun Gothic", serif;
+      text-align: center;
+    }
+
+    .container {
+      min-height: 100vh;
+      padding: 70px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stars {
+      color: #e6c58c;
+      letter-spacing: 18px;
+      font-size: 22px;
+    }
+
+    .moon {
+      font-size: 78px;
+      color: #f6dca6;
+      margin: 24px 0;
+      text-shadow: 0 0 40px #c9a4f5;
+    }
+
+    h1 {
+      font-size: 42px;
+      font-weight: normal;
+      letter-spacing: 5px;
+      margin: 12px 0;
+    }
+
+    .english {
+      color: #c9b1e4;
+      font-size: 13px;
+      letter-spacing: 5px;
+    }
+
+    .description {
+      margin: 45px 0;
+      line-height: 2.2;
+      font-size: 15px;
+      color: #ded4e9;
+    }
+
+    button {
+      background: transparent;
+      color: #f3dfb5;
+      border: 1px solid #d5b57e;
+      border-radius: 30px;
+      padding: 17px 48px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #d5b57e;
+      color: #15132d;
+    }
+
+    footer {
+      margin-top: 70px;
+      color: #9485ae;
+      font-size: 12px;
+    }
+
+   
+
+
+@media (max-width: 480px) {
+
+.container {
+  padding: 30px 20px 55px;
+  justify-content: flex-start;
+}
+
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .moon {
+    font-size: 65px;
+  }
+
+  footer {
+    margin-top: 25px;
+  }
+}
+
+
+
+  
+.tarot-card {
+  width: 170px;
+  max-width: 55vw;
+  height: auto;
+  margin: 15px 0;
+  border-radius: 10px;
+  box-shadow: 0 0 35px rgba(180, 130, 255, 0.3);
+}
+
+
+.footer-link {
+  display: inline-block;
+  color: #c9b1e4;
+  font-size: 13px;
+  text-decoration: none;
+  padding: 8px 12px;
+}
+
+.footer-link:hover {
+  color: #f3dfb5;
+  text-decoration: underline;
+}
+
+.footer-message {
+  margin-top: 12px;
+}
+
+
+.footer-divider {
+  color: #75678e;
+  font-size: 12px;
+  margin: 0 2px;
+}
+
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div class="stars">✦ ✧ ✦</div>
+
+    
+<div class="moon">☾</div>
+
+
+<img
+  class="tarot-card"
+  src="images/card_back.png"
+  alt="달빛 타로 카드 뒷면"
+>
+
+
+    <h1>달빛 타로</h1>
+    <div class="english">MOONLIGHT TAROT</div>
+
+    <p class="description">
+      고요한 달빛 아래,<br>
+      당신의 마음에 귀 기울이는 시간.<br>
+      오늘의 카드가 전하는 이야기를 만나보세요.
+    </p>
+
+    
+<button onclick="location.href='reading.html'">
+
+      타로 시작하기
+    </button>
+
+    
+
+
+
+<footer>
+  <nav aria-label="사이트 안내">
+    <a href="about.html" class="footer-link">
+      달빛 타로 소개
+    </a>
+
+    <span class="footer-divider" aria-hidden="true">|</span>
+
+    <a href="privacy.html" class="footer-link">
+      개인정보처리방침
+    </a>
+
+    <span class="footer-divider" aria-hidden="true">|</span>
+
+    <a href="contact.html" class="footer-link">
+      문의하기
+    </a>
+  </nav>
+
+  <div class="footer-message">
+    ✦ 당신의 밤을 비추는 작은 이야기 ✦
+  </div>
+</footer>
+
+

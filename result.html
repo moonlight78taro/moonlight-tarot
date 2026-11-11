@@ -1,0 +1,707 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>타로 결과 | 달빛 타로</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(
+        ellipse at 50% 30%,
+        #302450, #14132e 50%, #080d20
+      );
+      color: #f5e8d0;
+      font-family: Georgia, "Malgun Gothic", serif;
+      text-align: center;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 55px 20px 80px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: normal;
+    }
+
+    .subtitle {
+      color: #c9b1e4;
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 35px;
+    }
+
+    .results {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .results.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      max-width: 850px;
+      gap: 16px;
+    }
+
+    .result-item {
+      min-width: 0;
+      padding: 15px;
+      border: 1px solid #79658e;
+      border-radius: 15px;
+      background: rgba(255,255,255,0.035);
+    }
+
+    .position {
+      color: #e6c58c;
+      font-size: 18px;
+      margin-bottom: 18px;
+    }
+    
+.position-description {
+  color: #c9b1e4;
+  font-size: 12px;
+  line-height: 1.6;
+  min-height: 58px;
+  margin: 0 0 12px;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+
+    .card-image {
+      width: 210px;
+      max-width: 100%;
+      display: block;
+      margin: 20px auto;
+      border-radius: 9px;
+      box-shadow: 0 0 30px #a37bd455;
+    }
+
+ 
+.card-name {
+  color: #e6c58c;
+  font-size: 18px;
+  line-height: 1.5;
+
+  min-height: 81px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.direction {
+  color: #c9b1e4;
+  font-size: 13px;
+  margin: 10px 0 22px;
+}
+
+
+   
+
+.meaning {
+  padding: 18px 12px;
+  border: 1px solid #79658e;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+
+  line-height: 1.9;
+  font-size: 13px;
+
+  word-break: keep-all;
+  overflow-wrap: break-word;
+
+  flex: none;
+}
+
+
+
+.reading-guide {
+  display: block;
+  color: #e6c58c;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+    .keywords {
+      color: #e6c58c;
+    }
+
+    .meaning h3 {
+      color: #e6c58c;
+      font-size: 15px;
+      font-weight: normal;
+    }
+
+.overall-reading {
+  display: none;
+  max-width: 850px;
+  margin: 30px auto 0;
+  padding: 28px 24px;
+  border: 1px solid #79658e;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.045);
+}
+
+.overall-reading h2 {
+  margin: 0 0 18px;
+  color: #e6c58c;
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.overall-reading p {
+  margin: 0;
+  color: #f5e8d0;
+  font-size: 14px;
+  line-height: 2;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  white-space: pre-line;
+}
+
+
+.overall-section {
+  max-width: 680px;
+  margin: 0 auto 24px;
+  text-align: left;
+}
+
+.overall-section:last-child {
+  margin-bottom: 0;
+}
+
+
+.overall-section:last-child {
+  margin-bottom: 0;
+}
+
+
+
+.overall-guide {
+  display: block;
+  color: #e6c58c;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.7;
+  text-align: left;
+  margin: 0 0 10px;
+}
+
+
+
+
+.overall-content {
+  display: block;
+  width: 100%;
+  color: #f5e8d0;
+  font-size: 14px;
+  line-height: 2;
+  white-space: pre-line;
+  text-align: left;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  margin: 0;
+}
+
+
+
+    .back {
+      display: inline-block;
+      margin-top: 40px;
+      color: #e6c58c;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    @media (max-width: 650px) {
+      .results.three {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+      }
+
+   
+.result-item {
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid #79658e;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.035);
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+      .card-image {
+        width: 190px;
+      }
+    }
+  /* 개별 카드 해석 본문 정렬 */
+
+.meaning > p:not(.keywords) {
+  text-align: center;
+}
+
+
+.meaning .keywords {
+  text-align: center;
+}
+
+.meaning .reading-guide {
+  text-align: center;
+}
+
+.meaning h3 {
+  text-align: center;
+}
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>☾ 달빛이 전하는 메시지</h1>
+
+    <p class="subtitle">
+      당신이 선택한 카드에 담긴<br>
+      이야기를 천천히 살펴보세요.
+    </p>
+
+    <div class="results" id="results"></div>
+    
+<section class="overall-reading" id="overallReading">
+  <h2>☾ 달빛이 전하는 종합 메시지</h2>
+  <p id="overallMessage">
+    세 장의 카드가 전하는 이야기를 하나의 흐름으로 살펴보세요.
+  </p>
+</section>
+
+
+    <a class="back" href="reading.html">
+      ← 다른 리딩 선택하기
+    </a>
+  </main>
+
+  <script src="meanings.js"></script>
+<script src="topic-meanings.js"></script>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const results = document.getElementById("results");
+
+    const koreanNames = {
+      "00_THE_FOOL": "바보",
+      "01_THE_MAGICIAN": "마법사",
+      "02_THE_HIGH_PRIESTESS": "여사제",
+      "03_THE_EMPRESS": "여황제",
+      "04_THE_EMPEROR": "황제",
+      "05_THE_HIEROPHANT": "교황",
+      "06_THE_LOVERS": "연인",
+      "07_THE_CHARIOT": "전차",
+      "08_STRENGTH": "힘",
+      "09_THE_HERMIT": "은둔자",
+      "10_WHEEL_OF_FORTUNE": "운명의 수레바퀴",
+      "11_JUSTICE": "정의",
+      "12_THE_HANGED_MAN": "매달린 사람",
+      "13_DEATH": "죽음",
+      "14_TEMPERANCE": "절제",
+      "15_THE_DEVIL": "악마",
+      "16_THE_TOWER": "탑",
+      "17_THE_STAR": "별",
+      "18_THE_MOON": "달",
+      "19_THE_SUN": "태양",
+      "20_JUDGEMENT": "심판",
+      "21_THE_WORLD": "세계"
+    };
+
+    const suitNames = {
+      CUPS: "컵",
+      PENTACLES: "펜타클",
+      SWORDS: "소드",
+      WANDS: "완드"
+    };
+
+    const rankNames = {
+      ACE: "에이스",
+      TWO: "2",
+      THREE: "3",
+      FOUR: "4",
+      FIVE: "5",
+      SIX: "6",
+      SEVEN: "7",
+      EIGHT: "8",
+      NINE: "9",
+      TEN: "10",
+      PAGE: "시종",
+      KNIGHT: "기사",
+      QUEEN: "여왕",
+      KING: "왕"
+    };
+
+    function getCardName(cardFile) {
+      const cardId = cardFile.replace(".png", "");
+
+      if (koreanNames[cardId]) {
+        const english = cardId
+          .replace(/^\d+_/, "")
+          .replace(/_/g, " ");
+
+        return koreanNames[cardId] + " (" + english + ")";
+      }
+
+      const parts = cardId.split("_");
+      const suit = parts[0];
+      const rank = parts[2];
+
+      if (suitNames[suit] && rankNames[rank]) {
+        const english = parts
+          .slice(2)
+          .join(" ")
+          .replace(" OF ", " of ");
+
+        return suitNames[suit] + " " +
+          rankNames[rank] + " (" + english + ")";
+      }
+
+      return cardId.replace(/_/g, " ");
+    }
+
+    function createResult(cardFile, direction, position, positionDescription = "") {
+      if (!cardFile || !/^[A-Z0-9_]+\.png$/.test(cardFile)) {
+        return;
+      }
+
+      const cardId = cardFile.replace(".png", "");
+      const isReversed = direction === "reversed";
+
+      const item = document.createElement("section");
+      item.className = "result-item";
+
+      if (position) {
+        const positionTitle = document.createElement("h2");
+        positionTitle.className = "position";
+        positionTitle.textContent = position;
+        item.appendChild(positionTitle);
+        
+if (positionDescription) {
+  const description = document.createElement("p");
+  description.className = "position-description";
+  description.textContent = positionDescription;
+  item.appendChild(description);
+}
+
+      }
+
+      const img = document.createElement("img");
+      img.className = "card-image";
+      img.src = "images/" + cardFile;
+      img.alt = getCardName(cardFile);
+
+      if (isReversed) {
+        img.style.transform = "rotate(180deg)";
+      }
+
+      const name = document.createElement("div");
+      name.className = "card-name";
+      name.textContent = getCardName(cardFile);
+
+      const directionText = document.createElement("div");
+      directionText.className = "direction";
+      directionText.textContent =
+        isReversed ? "역방향" : "정방향";
+
+      const meaningBox = document.createElement("div");
+      meaningBox.className = "meaning";
+
+     
+const cardDirection = isReversed ? "reversed" : "upright";
+
+const topicMeaning =
+  readingType === "topic" && typeof topicMeanings !== "undefined"
+    ? topicMeanings[selectedTopic]?.[cardId]?.[cardDirection]
+    : null;
+
+const generalMeaning =
+  typeof tarotMeanings !== "undefined"
+    ? tarotMeanings[cardId]?.[cardDirection]
+    : null;
+
+const meaning = topicMeaning || generalMeaning;
+
+
+      if (meaning) {
+        const keywords = document.createElement("p");
+        keywords.className = "keywords";
+        keywords.textContent =
+          "✦ " + meaning.keywords.join(" · ");
+
+        
+const summary = document.createElement("p");
+
+const topicFocus = {
+  love: "연애와 감정, 상대방과의 관계를 중심으로 이 카드의 의미를 살펴보세요. ",
+  money: "현재의 금전 상황과 소비, 재정적인 판단을 중심으로 이 카드의 의미를 살펴보세요. ",
+  career: "직장생활과 진로, 앞으로의 기회를 중심으로 이 카드의 의미를 살펴보세요. ",
+  relationship: "주변 사람들과의 소통, 신뢰와 관계의 균형을 중심으로 이 카드의 의미를 살펴보세요. "
+};
+
+const focusText =
+  readingType === "topic"
+    ? (topicFocus[selectedTopic] || "")
+    : "";
+
+
+
+const guideTexts = {
+  "① 현재 상황": "지금 당신이 마주한 상황",
+  "② 달빛의 조언": "이 카드가 전하는 메시지",
+  "③ 미래 흐름": "앞으로의 변화와 가능성"
+};
+
+const guideText = guideTexts[position] || "";
+
+if (guideText) {
+  const guide = document.createElement("strong");
+  guide.className = "reading-guide";
+  guide.textContent = guideText;
+  summary.appendChild(guide);
+}
+
+const interpretation = document.createElement("span");
+
+interpretation.textContent =
+  (!topicMeaning ? focusText : "") + meaning.summary;
+
+summary.appendChild(interpretation);
+
+
+
+
+
+        const heading = document.createElement("h3");
+        heading.textContent = "☾ 달빛의 조언";
+
+        const advice = document.createElement("p");
+        advice.textContent = meaning.advice;
+
+        meaningBox.append(keywords, summary, heading, advice);
+      } else {
+        meaningBox.textContent =
+          "이 카드의 해석은 아직 준비 중이에요.";
+      }
+
+      item.append(img, name, directionText, meaningBox);
+      results.appendChild(item);
+    }
+
+    const readingType = params.get("type");
+    
+const topicNames = {
+  love: "연애운",
+  money: "금전운",
+  career: "직장운",
+  relationship: "인간관계"
+};
+
+const selectedTopic = params.get("topic");
+
+
+if (readingType === "topic" && topicNames[selectedTopic]) {
+  document.querySelector("h1").textContent =
+    "☾ " + topicNames[selectedTopic] + " 리딩";
+
+  const topicDescriptions = {
+    love: "사랑과 인연의 관점에서 세 장의 카드가 전하는 메시지를 살펴보세요.",
+    money: "금전 상황과 재정적인 선택의 관점에서 카드의 메시지를 살펴보세요.",
+    career: "일과 진로, 앞으로의 선택을 생각하며 카드의 메시지를 살펴보세요.",
+    relationship: "주변 사람들과의 관계를 돌아보며 카드의 메시지를 살펴보세요."
+  };
+
+  document.querySelector(".subtitle").textContent =
+    topicDescriptions[selectedTopic];
+}
+
+
+
+ if (readingType === "concern" || readingType === "topic") {
+  document.getElementById("overallReading").style.display = "block";
+
+  results.classList.add("three");
+
+      const positions = [
+        "① 현재 상황",
+        "② 달빛의 조언",
+        "③ 미래 흐름"
+      ];
+
+const positionDescriptions = [
+  "지금 당신이 마주한 상황과 고민의 중심을 비추는 카드입니다.",
+  "지금의 고민을 풀어나가기 위해 살펴볼 태도와 선택을 알려주는 카드입니다.",
+  "현재의 흐름이 이어질 때 나타날 수 있는 변화와 가능성을 보여주는 카드입니다."
+];
+
+      for (let i = 1; i <= 3; i++) {
+        createResult(
+          params.get("card" + i),
+          params.get("direction" + i),
+          positions[i - 1],
+          positionDescriptions[i - 1]
+        );
+      }
+    } else {
+      const cardFile = params.get("card") || params.get("card1");
+      const direction = params.get("direction") ||
+                        params.get("direction1");
+
+      createResult(cardFile, direction, "");
+    }
+
+function createOverallReading() {
+
+if (readingType !== "concern" && readingType !== "topic") return;
+
+
+  const overallMessage = document.getElementById("overallMessage");
+  const messages = [];
+
+  for (let i = 1; i <= 3; i++) {
+    const cardFile = params.get("card" + i);
+    const direction = params.get("direction" + i);
+
+    if (!cardFile) return;
+
+    const cardId = cardFile.replace(".png", "");
+  
+const cardDirection =
+  direction === "reversed" ? "reversed" : "upright";
+
+const topicMeaning =
+  readingType === "topic" && typeof topicMeanings !== "undefined"
+    ? topicMeanings[selectedTopic]?.[cardId]?.[cardDirection]
+    : null;
+
+const generalMeaning =
+  typeof tarotMeanings !== "undefined"
+    ? tarotMeanings[cardId]?.[cardDirection]
+    : null;
+
+const meaning = topicMeaning || generalMeaning;
+
+
+    if (!meaning) return;
+
+    const cardName = getCardName(cardFile).split(" (")[0];
+
+  
+
+
+if (i === 1) {
+  messages.push({
+    title: "지금 당신이 마주한 상황",
+    content: meaning.summary
+  });
+}
+
+if (i === 2) {
+  messages.push({
+    title: "지금 필요한 조언",
+    content: meaning.advice
+  });
+}
+
+if (i === 3) {
+  messages.push({
+    title: "앞으로의 변화와 가능성",
+    content: meaning.summary
+  });
+}
+
+
+
+  
+
+ }
+
+  
+overallMessage.replaceChildren();
+
+messages.forEach(message => {
+  const section = document.createElement("div");
+  section.className = "overall-section";
+
+  const title = document.createElement("strong");
+  title.className = "overall-guide";
+  title.textContent = message.title;
+
+  const content = document.createElement("p");
+  content.className = "overall-content";
+  content.textContent =
+    message.content.replace(/([.!?]) +(?=\S)/g, "$1\n");
+
+  section.append(title, content);
+  overallMessage.appendChild(section);
+});
+
+
+}
+
+function alignMeaningHeights() {
+  const meaningBoxes = results.querySelectorAll(".meaning");
+
+  // 먼저 기존 높이를 초기화
+  meaningBoxes.forEach(box => {
+    box.style.height = "auto";
+  });
+
+  // PC에서 고민 타로 3장을 표시할 때만 적용
+  if (
+    !results.classList.contains("three") ||
+    window.innerWidth <= 650
+  ) {
+    return;
+  }
+
+  // 가장 긴 해석 상자의 높이 확인
+  let maxHeight = 0;
+
+  meaningBoxes.forEach(box => {
+    maxHeight = Math.max(maxHeight, box.getBoundingClientRect().height);
+  });
+
+  // 모든 해석 상자를 동일한 높이로 설정
+  meaningBoxes.forEach(box => {
+    box.style.height = maxHeight + "px";
+  });
+}
+
+// 페이지가 표시된 뒤 높이 정렬
+window.addEventListener("load", alignMeaningHeights);
+createOverallReading();
+
+// 브라우저 창 크기가 바뀌어도 다시 정렬
+window.addEventListener("resize", alignMeaningHeights);
+
+if (results.children.length === 0) {
+  const notice = document.createElement("p");
+  notice.textContent =
+    "선택된 카드가 없습니다. 카드 뽑기 화면에서 시작해 주세요.";
+  results.appendChild(notice);
+}
+</script>
+</body>
+</html>
+
