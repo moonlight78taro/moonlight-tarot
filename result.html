@@ -349,13 +349,11 @@
 
 <script>
 async function shareTarot() {
-  const shareData = {
-    title: "달빛 타로 | 나의 타로 결과",
-    text: "달빛 타로에서 나의 카드를 뽑아봤어요. 당신의 카드도 확인해 보세요! ✨",
-   url: window.location.protocol === "file:" ? "https://moonlight78taro.github.io/moonlight-tarot/result.html" + window.location.search : window.location.href + window.location.search
-  ? "https://moonlight78taro.github.io/moonlight-tarot/"
-  : window.location.origin + "/"
-  };
+const shareData = {
+  title: "달빛 타로 | 나의 타로 결과",
+  text: "달빛 타로에서 나의 카드를 뽑아봤어요. 당신의 카드도 확인해 보세요! ✨",
+  url: "https://moonlight78taro.github.io/moonlight-tarot/result.html" + window.location.search
+};
 
   if (navigator.share) {
     try {
