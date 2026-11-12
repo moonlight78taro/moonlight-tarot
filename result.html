@@ -249,6 +249,36 @@
         max-width: 420px;
       }
 
+  }
+      .share-button {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 30px auto 10px;
+  padding: 14px 24px;
+
+  background: rgba(88, 61, 125, 0.35);
+  border: 1px solid #b89ad5;
+  border-radius: 30px;
+
+  color: #ffe5a8;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  cursor: pointer;
+
+  box-shadow: 0 0 18px rgba(180, 130, 255, 0.15);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.share-button:hover {
+  background: rgba(120, 85, 160, 0.45);
+  box-shadow: 0 0 22px rgba(180, 130, 255, 0.3);
+}
+
+.share-button:active {
+  transform: scale(0.98);
+}
    
 .result-item {
   min-width: 0;
@@ -265,7 +295,7 @@
       .card-image {
         width: 190px;
       }
-    }
+    
   /* 개별 카드 해석 본문 정렬 */
 
 .meaning > p:not(.keywords) {
@@ -305,6 +335,9 @@
   </p>
 </section>
 
+<button class="share-button" type="button" onclick="shareTarot()">
+  ✧ 내 타로 결과 공유하기 ✧
+</button>
 
     <a class="back" href="reading.html">
       ← 다른 리딩 선택하기
@@ -313,6 +346,35 @@
 
   <script src="meanings.js"></script>
 <script src="topic-meanings.js"></script>
+
+<script>
+async function shareTarot() {
+  const shareData = {
+    title: "달빛 타로 | 나의 타로 결과",
+    text: "달빛 타로에서 나의 카드를 뽑아봤어요. 당신의 카드도 확인해 보세요! ✨",
+    url: window.location.protocol === "file:"
+  ? "https://moonlight78taro.github.io/"
+  : window.location.origin + "/"
+  };
+
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+    } catch (error) {
+      if (error.name !== "AbortError") {
+        alert("공유하기를 완료하지 못했어요.");
+      }
+    }
+  } else {
+    try {
+      await navigator.clipboard.writeText(shareData.url);
+      alert("달빛 타로 링크가 복사되었어요!");
+    } catch (error) {
+      prompt("아래 링크를 복사해 주세요.", shareData.url);
+    }
+  }
+}
+</script>
 
   <script>
     const params = new URLSearchParams(window.location.search);
